@@ -14002,6 +14002,45 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ol>
+<li><p>Introduction to model validation</p>
+<blockquote><p>Hello, my name is Kasey Jones - And welcome to this course on model validation. Let's get started!</p>
+</blockquote>
+</li>
+<li><p>What is model validation?</p>
+<blockquote><p>So what is model validation? Well, model validation consists of various steps and processes that ensure your model performs as expected on new data. The most common way to do this is to test your model's accuracy on data it has never seen before (called a holdout set). If your model's accuracy is similar for the data, it was trained on, and the holdout data, you can claim that your model is validated. However, model validation can also consist of choosing the right model, the best parameters, and even the best accuracy metric. The ultimate goal of model validation is to end up with the best performing model possible, that achieves high accuracy on new data. Before we begin exploring model validation, let's review some basic modeling steps using scikit-learn.</p>
+</blockquote>
+</li>
+<li><p>scikit-learn modeling review</p>
+<blockquote><p>Modeling in Python follows a simple procedure, regardless of the type of model you are constructing. Whether you are a seasoned scikit-learn veteran or new to building models with this module, let's take a quick look at these steps. First, we create a model by specifying the model type and its parameters. In this case, we are creating a random forest regression model with RandomForestRegressor(). Second, we fit the model using the dot-fit() method. This method has two main arguments. X, an array of data used in the model as training data, and y, an array of response values matching the size of the X array. When dot-fit() is used, the model parameters will be printed in the console.</p>
+</blockquote>
+</li>
+<li><p>Modeling review continued</p>
+<blockquote><p>To assess model accuracy, we generate predictions for data using the dot-predict() method. And lastly, we look at the accuracy metrics. Here we are comparing the model's predictions (the variable predictions) and the actual responses, y_test. Future lessons and exercises will be devoted to accuracy metrics, as they are a vital component to model validation. For this current example though, we are looking at the mean absolute error. This function takes two arrays as arguments. The true values, y_true, and the predicted values, y_pred, and returns the mean absolute error between them.</p>
+</blockquote>
+</li>
+<li><p>Review prerequisites</p>
+<blockquote><p>This process of generating a model, fitting, predicting, and then reviewing model accuracy will be repeated throughout this course. If you are unfamiliar with these steps, you should consider taking the prerequisite courses. They will go into more detail about using Python and performing these modeling steps.</p>
+</blockquote>
+</li>
+<li><p>fivethirtyeight's candy dataset</p>
+<blockquote><p>Throughout this course, we will use fivethirtyeight's ultimate Halloween candy power ranking dataset several times. This dataset contains 85 different candies, data on their various characteristics, and a column specifying how often that candy was selected in a head-to-head match-up with other candies. This column is a win-percentage and contains values between 0 and 100.</p>
+</blockquote>
+</li>
+<li><p>Seen vs. unseen data</p>
+<blockquote><p>Model validation's main goal is to ensure that a predictive model will perform as expected on new data. Obtaining predictions for training data (or seen data) and testing data (or unseen data) is coded in the same way and uses the predict() method. Generally, models perform a lot better on data they have seen before, as unseen data may have features or characteristics that were not exposed in the model. If your training and testing errors are vastly different, it may be a sign that your model is overfitted. We will use model validation to make sure we get the best testing error possible.</p>
+</blockquote>
+</li>
+<li><p>Let's begin!</p>
+<blockquote><p>Let's see why model validation is so important by looking at an example of training and testing accuracies.</p>
+</blockquote>
+</li>
+</ol>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="1.1.-Modeling-steps">1.1. Modeling steps<a class="anchor-link" href="#1.1.-Modeling-steps">&#182;</a></h3>
 </div>
 </div>
@@ -14014,7 +14053,18 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<blockquote><p><code>.validate()</code></p>
+<p>Possible Answers:</p>
+<ul>
+<li><code>.predict()</code>.</li>
+<li><code>.fit()</code>.</li>
+<li><code>.validate()</code>.</li>
+</ul>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<blockquote><p><code>.validate()</code>.</p>
 </blockquote>
 
 </div>
@@ -14448,8 +14498,8 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Model error on seen data: 3.49.
-Model error on unseen data: 9.62.
+<pre>Model error on seen data: 3.53.
+Model error on unseen data: 9.77.
 </pre>
 </div>
 </div>
@@ -14462,6 +14512,41 @@ Model error on unseen data: 9.62.
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="2.-Regression-models">2. Regression models<a class="anchor-link" href="#2.-Regression-models">&#182;</a></h2>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ol>
+<li><p>Regression models</p>
+<blockquote><p>Welcome to another lesson on model validation. There are two types of predictive models discussed in this course. Models built for continuous variables, or regression models, and models built for categorical variables, called classification models. This lesson focuses purely on regression models, and more specifically, random forest regression models using scikit-learn.</p>
+</blockquote>
+</li>
+<li><p>Random forests in scikit-learn</p>
+<blockquote><p>Although this is not a machine learning course, it is important to understand the basic principles of the models we will be running and discussing. For that reason, we will stick with random forest models throughout this course, and only run random forest regression or random forest classification models. Both models have similar parameters and are called in the same way when using scikit-learn.</p>
+</blockquote>
+</li>
+<li><p>Decision trees</p>
+<blockquote><p>To understand random forest models, we should review decision trees. Decision trees look at various ways to split data until only a few or even a single observation remains. The splits may be categorically based, "Are you left-handed?", or continuously based, "what is your age?" A new observation will follow the tree based on its own data values until it reaches an end-node (called a leaf). In the given example, Bob - who is left-handed, 18 years old, and likes onions, would be predicted to be in $4,000 of debt if we followed this decision tree. The value in the end-node represents the average of all people in the training data who ended in that leaf.</p>
+</blockquote>
+</li>
+<li><p>Averaging decision trees</p>
+<blockquote><p>Random forest regression models generate a bunch of different decision trees and use the mean prediction of the decision trees as the final value for a new observation. Here we created five decision trees. Their average prediction for Bob was $4,200 of debt.</p>
+</blockquote>
+</li>
+<li><p>Random forest parameters</p>
+<blockquote><p>Although these algorithms have a lot of parameters, we will focus on only three. n_estimators is the number of trees to create for the random forest. max_depth is the maximum depth for these trees, or how many times we can split the data. It is also described as the maximum length from the beginning of a tree to the tree's end nodes. These two parameters alone can make a big impact on model accuracy. Lastly, random_state allows us to create reproducible models. I will always use 1,111 as my random state. If you ever see a different number, I promise I did not code that example! There are two ways to set these parameters. They can be set when RandomForestRegressor() is initiated, which is the most common way for setting model parameters. They can also be set later, by assigning a new value to a models attribute. The second method could be helpful when testing out different sets of parameters.</p>
+</blockquote>
+</li>
+<li><p>Feature importance</p>
+<blockquote><p>After a model is created, we can assess how important different features (or columns) of the data were in the model by using the dot-feature<em>importances</em> attribute. If the data is a pandas DataFrame, X, we can access the column names and print the importance score quite easily. The larger this number is, the more important that column was in the model. In our example, we loop through the values from dot-feature<em>importances</em> and match the score to the column from X. The output tells us that eye_color is not that useful in our model, but the fact that someone is left-handed is highly important.</p>
+</blockquote>
+</li>
+<li><p>Let's begin</p>
+<blockquote><p>Let's create a random forest regression model and look at its output.</p>
+</blockquote>
+</li>
+</ol>
+
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
@@ -14935,7 +15020,7 @@ Model error on unseen data: 9.62.
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[25]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Slpitting the data into features matrix (X) &amp; target column (y):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Slpitting the data into feature matrix (X) &amp; target column (y):</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">split_data</span><span class="p">(</span><span class="n">tic_tac_toe</span><span class="p">,</span> <span class="s1">&#39;Class&#39;</span><span class="p">)</span>
 </pre></div>
 
@@ -15074,8 +15159,8 @@ Model error on unseen data: 9.62.
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>1    561
-0    206
+<pre>1    545
+0    222
 dtype: int64</pre>
 </div>
 
@@ -15120,7 +15205,7 @@ dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>The first predicted probabilities are: [0.18 0.82]
+<pre>The first predicted probabilities are: [0.24 0.76]
 </pre>
 </div>
 </div>

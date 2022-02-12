@@ -14002,6 +14002,57 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ol>
+<li><p>Introduction to hyperparameter tuning</p>
+<blockquote><p>Hello again - In this lesson, we are going to start applying the model validation techniques we have been practicing while introducing hyperparameter tuning.</p>
+</blockquote>
+</li>
+<li><p>Model parameters</p>
+<blockquote><p>To start, let's first review what model parameters are, as model parameters and model hyperparameters are quite different. Model parameters are created as the result of fitting a model and are estimated by the input data. They are used to make predictions on new data and are not manually set by the modeler.</p>
+</blockquote>
+</li>
+<li><p>Linear regression parameters</p>
+<blockquote><p>For example, in a linear model, the coefficients and intercept are considered model parameters. We can print a linear model's parameters using lr-dot-coef<em> and lr-dot-intercept</em>. Notice that these parameters are only created after the model has been fit.</p>
+</blockquote>
+</li>
+<li><p>Linear regression parameters</p>
+<blockquote><p>If we did not call .fit, the coefficients and intercept would not exist for the lr object.</p>
+</blockquote>
+</li>
+<li><p>Model hyperparameters</p>
+<blockquote><p>So, if model parameters are the result of training a model, then what are hyperparameters? Hyperparameters are the values that are set before training occurs. So anytime we refer to a parameter as being manually set, we are referring to hyperparameters. We have already been working with some hyperparameters for scikit-learn's random forest models, such as n_estimators, and max_depth. Let's cover a few more of the basic hyperparameters for these models.</p>
+</blockquote>
+</li>
+<li><p>Random forest hyperparameters</p>
+<blockquote><p>The table above only has four of the 15 or so possible hyperparameters, and we have already discussed the first three: n_estimators, max_depth, and max_features during this course. I am adding min_samples_split to our list, which is the minimum number of samples required to make a split at the end of a leaf. If a leaf in a decision tree has four observations in it, min_samples_split must be 4 or greater in order for this leaf to be split into more leaves. So what now? If these are hyperparameters, how do we tune them?</p>
+</blockquote>
+</li>
+<li><p>What is hyperparameter tuning?</p>
+<blockquote><p>Throughout this course, we have been hinting at various aspects of hyperparameter tuning. We have used various hyperparameters and altered the values of these hyperparameters to suit our specific model or data. Hyperparameter tuning consists of selecting hyperparameters to test and then running a specific type of model with various values for these hyperparameters. For each run of the model, we keep track of how well the model did for a specified accuracy metric, as well as keep track of the hyperparameters that were used.</p>
+</blockquote>
+</li>
+<li><p>Specifying ranges</p>
+<blockquote><p>One of the hardest parts of this process is selecting the right hyperparameters to tune, and specifying the appropriate value ranges for each hyperparameter. For example, consider the three ranges of values specified in the example above. When we run hyperparameter tuning, we run our random forest model at different values from the ranges specified. We might select a random max depth, a minimum sample for creating splits of 8, and a maximum feature count of 4. We used the random-dot-choice() function to select randomly from the depth list. To review which parameters were used at any time, you can use the get_params() method on your model.</p>
+</blockquote>
+</li>
+<li><p>Too many hyperparameters!</p>
+<blockquote><p>If you do check out the contents of get_params(), you might feel overwhelmed by the amount of options available. For this model, there are 16 different hyperparameters. In practice, however, only a handful of these hyperparameters will be tuned at the same time. Tuning too many can take forever to train and might make reading the output difficult.</p>
+</blockquote>
+</li>
+<li><p>General guidelines</p>
+<blockquote><p>It's best to start with the basics and tune the hyperparameters you understand. Read through the documentation for the ones that you don't, and test values you have seen in other models. As you practice this technique more, you will become more comfortable with the process.</p>
+</blockquote>
+</li>
+<li><p>Let's practice!</p>
+<blockquote><p>Let's work on the basic steps for hyperparameter tuning.</p>
+</blockquote>
+</li>
+</ol>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="1.1.-Creating-Hyperparameters">1.1. Creating Hyperparameters<a class="anchor-link" href="#1.1.-Creating-Hyperparameters">&#182;</a></h3>
 </div>
 </div>
@@ -14227,7 +14278,54 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="2.RandomizedSearchCV">2.RandomizedSearchCV<a class="anchor-link" href="#2.RandomizedSearchCV">&#182;</a></h2>
+<h2 id="2.-RandomizedSearchCV">2. RandomizedSearchCV<a class="anchor-link" href="#2.-RandomizedSearchCV">&#182;</a></h2>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ol>
+<li><p>RandomizedSearchCV</p>
+<blockquote><p>Now that we have discussed the basics of hyperparameter tuning let's combine model validation with tuning to start creating the most accurate, validated models possible.</p>
+</blockquote>
+</li>
+<li><p>Grid searching hyperparameters</p>
+<blockquote><p>Consider if we only had two parameters to choose from, the number of trees and the maximum depth. If we had five options for the number of trees and four options for the maximum depth, this would create 20 possible combinations of these parameters. Notice that they form a grid of possible parameters. We could conduct a complete grid search, and run our random forest model using each unique combination of the two hyperparameters.</p>
+</blockquote>
+</li>
+<li><p>Grid searching continued</p>
+<blockquote><p>There is one main benefit for grid searching, which is that each possible combination of values will be tested. However, there is one major drawback: any additional parameter added for testing will grow the training time exponentially. Therefore grid searching is only possible with a limited number of parameters, and a limited number of ranges.</p>
+</blockquote>
+</li>
+<li><p>Better methods</p>
+<blockquote><p>There are two amazing alternatives to using grid search, which both have their advantages over grid searching. Random searching, which consists of randomly selecting from all hyperparameter values from the list of possible ranges, and Bayesian optimization, which uses the past results of each test to update the hyperparameters for the next run. Bayesian approaches are out of the scope for this course, so we will focus on random searching methods.</p>
+</blockquote>
+</li>
+<li><p>Random search</p>
+<blockquote><p>To implement a random search, we can use scikit-learn's method, RandomizedSearchCV(). This method will randomly select hyperparameters for each model run based on the user-defined hyperparameter space. RandomizedSearchCV() requires a dictionary of hyperparameters and their possible values. Here we have specified four max depths, nine max features, and nine min_samples_split options. Using a grid search with these possible parameters would take 324 total model runs,as 4 times 9 times 9 is 324. However, using a random search, we can get similar results only using 30 or 40 runs.</p>
+</blockquote>
+</li>
+<li><p>Random search parameters</p>
+<blockquote><p>To use this method we need to specify a few other parameters. The parameter n_iter specifies the number of models to run. estimator allows us to set the base model, such as a random forest regression model, and scoring allows us to specify a scoring function.</p>
+</blockquote>
+</li>
+<li><p>Setting RandomizedSearchCV parameters</p>
+<blockquote><p>Aside from setting up the parameter distributions, we need to create a model and the scoring function to use. The estimator specified here uses a RandomForestRegression() model, with 20 trees. We have also specified the mean absolute error to be the scoring function.</p>
+</blockquote>
+</li>
+<li><p>RandomizedSearchCV implemented</p>
+<blockquote><p>Let's finally implement the RandomizedSearchCV method. We use our model, rfr, the parameter distribution, specify to use 40 parameter sets and set the cv value to 5. Ah! So hopefully, the "CV" on the end of this method helps us see why we are even discussing hyperparameter tuning in a course about model validation! The cross-validation techniques we have been discussing will be used with random searching to help us select the best model for our data. After all, if we test 40 different parameter sets, how do we determine which one is the best? And how do we appropriately compare their results? We have to use the techniques we have learned so far in this course.</p>
+</blockquote>
+</li>
+<li><p>RandomizedSearchCV implemented</p>
+<blockquote><p>After using RandomizedSearchCV, we should have a validated model that has better accuracy than using the base implementation of that model. To actually complete the random search, we use the dot-fit() method, just like any other scikit-learn model.</p>
+</blockquote>
+</li>
+<li><p>Let's explore some examples!</p>
+<blockquote><p>We will save exploring the output of the RandomizedSearchCV() method for the next lesson. For now, let's run through some examples.</p>
+</blockquote>
+</li>
+</ol>
+
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
@@ -14387,6 +14485,49 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ol>
+<li><p>Selecting your final model</p>
+<blockquote><p>In this lesson, we will explore the output of a random search implementation and then select, and reuse our final model.</p>
+</blockquote>
+</li>
+<li><p>Random search output</p>
+<blockquote><p>To start, we will assume the variable rs is an implementation of RandomizedSearchCV() that has already been fit on data. Let's explore some of the key attributes of rs. Of course, the first attributes us eager-beavers have to check focuses on the best model. And so, the attributes have been so named best<em>score</em>, best<em>params</em>, and best<em>estimator</em>. These attributes provide the results from the best model found in the random search, and you will use these attributes often.</p>
+</blockquote>
+</li>
+<li><p>Other attributes</p>
+<blockquote><p>Of course, there are other attributes to explore. Perhaps the most useful will be rs-dot-cv<em>results</em>, which contains a dictionary full of the cross-validation results. This dictionary includes keys such as "mean_test_scores," which gives the average cross-validation test score for each run. The dictionary also contains the key "params," which contains all of the selected parameters for each model run.</p>
+</blockquote>
+</li>
+<li><p>Using .cv<em>results</em></p>
+<blockquote><p>We can use these attributes to create visuals of the output or make inferences on which hyperparameters are having the biggest impact on the model. For example, let's look at the mean test scores grouped by the maximum depth of the model. Here we grabbed the max depth from each of the 10 models, as well as the mean test score. We then created a pandas DataFrame and grouped the scores by the maximum depth. If we look at the output, a max depth of 2, 4, and even 6 all produced really low scores. However, a max depth of 8 and 10 almost achieved 90% accuracy.</p>
+</blockquote>
+</li>
+<li><p>Other attributes continued</p>
+<blockquote><p>There are a ton of ways to use the cv<em>results</em> output to visualize the effect of each parameter. In the case, we just explored, it's probably best to use a larger max depth when running your models. These results might inspire you to rerun the random search with a slightly different hyperparameter space. Right now, we just want to select the best model from our random search.</p>
+</blockquote>
+</li>
+<li><p>Selecting the best model</p>
+<blockquote><p>However, you perform hyperparameter tuning; in the end, you'll need to select one final model. This may be the model with the best accuracy or the model with the highest precision or even recall. For now, let's assume we are going for the best mean squared error. The model with the lowest error from the cross-validation is our guess for the model that will perform the best on future data. The best<em>estimator</em> attribute contains the model that performed the best during cross-validation.</p>
+</blockquote>
+</li>
+<li><p>Comparing types of models</p>
+<blockquote><p>As an aside, if you built different types of models, say a random forest and a gradient boosting model, you can test the accuracies of your final models on the test set that you held out. This gives an unbiased estimate and can help you make your final overall decision. In the case above, you would select the gradient boosting model as the final model because it had a lower mean squared error on the test data.</p>
+</blockquote>
+</li>
+<li><p>Using .best<em>estimator</em></p>
+<blockquote><p>Let's use best<em>estimator</em> from a random forest model. You can use the method predict() on this estimator with new data just like any other scikit-learn model. You can check all of the parameters that were used by calling the get_params() method or you can save the estimator as a pickle file using the joblib module for reuse later. This will allow you to load your model on a later date or to share your model with a colleague.</p>
+</blockquote>
+</li>
+<li><p>Let's practice!</p>
+<blockquote><p>Let's work through a couple examples.</p>
+</blockquote>
+</li>
+</ol>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="3.1.-Best-classification-accuracy">3.1. Best classification accuracy<a class="anchor-link" href="#3.1.-Best-classification-accuracy">&#182;</a></h3>
 </div>
 </div>
@@ -14399,7 +14540,19 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<blockquote><p><code>{'max_depth': 12, 'min_samples_split': 4, 'n_estimators': 20}</code></p>
+<p>Possible Answers:</p>
+<ul>
+<li><code>{'max_depth': 8, 'min_samples_split': 4, 'n_estimators': 10}</code>.</li>
+<li><code>{'max_depth': 2, 'min_samples_split': 4, 'n_estimators': 10}</code>.</li>
+<li><code>{'max_depth': 12, 'min_samples_split': 4, 'n_estimators': 20}</code>.</li>
+<li><code>{'max_depth': 2, 'min_samples_split': 2, 'n_estimators': 50}</code>.</li>
+</ul>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<blockquote><p><code>{'max_depth': 12, 'min_samples_split': 4, 'n_estimators': 20}</code>.</p>
 </blockquote>
 
 </div>
@@ -15182,6 +15335,38 @@ a.anchor-link {
 
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="4.-Course-completed!">4. Course completed!<a class="anchor-link" href="#4.-Course-completed!">&#182;</a></h2>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ol>
+<li><p>Course completed!</p>
+<blockquote><p>Thank you for sticking with me through these four chapters and congratulations on completing this course on model validation!</p>
+</blockquote>
+</li>
+<li><p>Course recap</p>
+<blockquote><p>We covered topics such as evaluation metrics, creating training, validation, and testing datasets, cross-validation, and even touched on model tuning. You can use these techniques going forward to make sure your models perform as expected on new data.</p>
+</blockquote>
+</li>
+<li><p>Next steps</p>
+<blockquote><p>There are so many directions that you can go from here. One of the best ways that you can solidify your model validation understanding would be to work through an older Kaggle competition. These are modeling competitions where several people post modeling code and techniques. Working through their examples would solidify all that you have learned here.</p>
+</blockquote>
+</li>
+<li><p>Next steps</p>
+<blockquote><p>There are also plenty of other DataCamp courses you can check out. If you want a deeper dive into model tuning, check out our course on hyperparameter tuning. Or if you want to start using more complex models, beyond the random forests we used in this course, check out our course on deep learning.</p>
+</blockquote>
+</li>
+<li><p>Thank you!</p>
+<blockquote><p>Again - Thank you for joining me and good luck in your future modeling efforts!</p>
+</blockquote>
+</li>
+</ol>
+
+</div>
 </div>
 </body>
 

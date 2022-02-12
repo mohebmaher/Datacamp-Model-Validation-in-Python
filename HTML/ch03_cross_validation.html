@@ -14002,6 +14002,45 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ol>
+<li><p>The problems with holdout sets</p>
+<blockquote><p>Hello again - let's continue our quest for validating machine learning models by discussing why traditional validation approaches still have pitfalls.</p>
+</blockquote>
+</li>
+<li><p>Transition validation</p>
+<blockquote><p>The typical modeling procedure looks something like this. We take a dataset, use, say, 80% for training, and the remaining 20% for testing. We learned how to do this a couple lessons ago using scikit-learn. Using the train_test_split() function, we split our data and run a random forest classifier on this single split for our model. Here we have output the MAE, and the error was 10-point-24.</p>
+</blockquote>
+</li>
+<li><p>Traditional training splits</p>
+<blockquote><p>If we repeat this process with a different random seed though, we might get different results. Consider the following two samples from the ultimate candy-power-ranking dataset: s1 and s2. This dataset consists of 85 data points about candy characteristics, and we have randomly selected 60 candies for each sample. Only 39 of the 60 candies overlap between the two datasets.</p>
+</blockquote>
+</li>
+<li><p>Traditional training splits</p>
+<blockquote><p>Furthermore, the first sample contains 34 chocolate candies, and the second sample only contains 30.</p>
+</blockquote>
+</li>
+<li><p>The split matters</p>
+<blockquote><p>Why is this important? Well, we have already seen that selecting 60 candies for a sample can be highly variable. If we split the candy dataset into 60 candies for training and 25 candies for testing, and build the exact same machine learning model, we'll probably get slightly varying results. In this example alone, the second testing accuracy is over 12% worse. Using the first sample, you would report an error of 10-point-32. The second gives an error of 11-point-56. These results are way too different.</p>
+</blockquote>
+</li>
+<li><p>Train, validation, test</p>
+<blockquote><p>Even the train, validation, test procedure we discussed earlier is not safe from the problems we could have with holdout samples, especially when we have limited data. Consider this example. We created a train, test, and validation split. We fit a random forest model, and maybe we even did some hyperparameter tuning or testing of various models. In the end, we decided on this random forest regressor model. Look at how close the validation and testing accuracies are to each other - 9-point-18 and 8-point-98. This is awesome, right?</p>
+</blockquote>
+</li>
+<li><p>Round 2</p>
+<blockquote><p>Let's run the same model again, but this time we will run it with a different random seed. The errors were 8-point-73 and 10-point-91, which is a big problem. This can happen when using the traditional validation approach, especially with limited data. We think our model is validated, but if we just changed the sample we used - we get drastically different results. This random forest model with only 25 trees and 4 features does not seem to generalize as well to new data as we would expect.</p>
+</blockquote>
+</li>
+<li><p>Holdout set exercises</p>
+<blockquote><p>To overcome this limitation of holdout sets, we use something called cross-validation, which is the gold-standard for model validation! Before we fully introduce cross-validation, let's discover why we need it with a couple of exercises.</p>
+</blockquote>
+</li>
+</ol>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="1.1.-Two-samples">1.1. Two samples<a class="anchor-link" href="#1.1.-Two-samples">&#182;</a></h3>
 </div>
 </div>
@@ -14419,7 +14458,19 @@ Name: Class, dtype: int64
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<blockquote><p>A &amp; B</p>
+<p>Possible Answers:</p>
+<ul>
+<li>A &amp; D.</li>
+<li>C &amp; D.</li>
+<li>A &amp; B.</li>
+<li>A, B, &amp; D.</li>
+</ul>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<blockquote><p>A &amp; B.</p>
 </blockquote>
 
 </div>
@@ -14427,6 +14478,41 @@ Name: Class, dtype: int64
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="2.-Cross-validation">2. Cross-validation<a class="anchor-link" href="#2.-Cross-validation">&#182;</a></h2>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ol>
+<li><p>Cross-validation</p>
+<blockquote><p>Hello everyone - let's push validation a step further and discuss the gold-standard: cross-validation.</p>
+</blockquote>
+</li>
+<li><p>Cross-validation</p>
+<blockquote><p>Before, we talked about using 80% of our data for training and 20% for testing. We took this a step further by splitting the 80% of training data into training and validation splits. Previously, we learned that our accuracy metric on this validation set may be misleading, or if we split this data differently, we might get different results.</p>
+</blockquote>
+</li>
+<li><p>Cross-validation</p>
+<blockquote><p>For cross-validation we don't just need one of these training/validation splits— we need a bunch of them. This method makes us run our single model on various training/validation combinations and gives us a lot more confidence in our final metrics. For this example, we have a 5-fold cross-validation. Each time we run the model, a different 80% of the data will be used for training, and a different 20% will be used for validation. And we can do this in such a manner that all of the data will be used in only one of the validation sets. This ensures that every point is used for validation exactly one time. Although using each point in only one validation set is not required for cross-validation, it is often good practice to do so. And fortunately for us, this concept of what this should look like, how this could be done, and why it's even important is the hardest part. Actually implementing this is very straightforward.</p>
+</blockquote>
+</li>
+<li><p>KFold cross-validation with scikit-learn</p>
+<blockquote><p>scikit-learn's KFold() function gives us a few options for splitting data into several training and validation sets. We can specify the number of splits that we want; we can specify if the data needs to be shuffled and to replicate our results, we can specify a random state. Here I have generated two arrays to use as data. The X array consists of the numbers 0 through 39, and the y array consists of 20 zeros followed by 20 ones. Next, we create the generator kf, which will split our data. It uses the KFold() function with five splits and no shuffling. To actually split our data, we call kf-dot-split() on X. This only generates indices for us to use. So I don't want you to think that we have generated five training and validation datasets. All we have done is created a list of indices, that can be used for our splits.</p>
+</blockquote>
+</li>
+<li><p>Accessing indices</p>
+<blockquote><p>So what's actually in splits if it doesn't contain datasets? The splits variable contains the training and validation indices for the five different splits of X. If we print the length of the indices, we see train_index has 32 values, and test_index has eight values, and this is repeated five times. If we print out what these lists actually look like, we see train_index has the numbers 0 through 31, and test_index has the numbers 32 through 39. Calling these indices on X and y will give us training and validation data.</p>
+</blockquote>
+</li>
+<li><p>Example using splits</p>
+<blockquote><p>KFold is generally used when we want to fit the same model using KFold cross-validation. We would create the splits, using kf.split(). We would then loop through the train and validation indices, and fit the same model using the new training data. Finally, we create the predictions and keep track of the errors. To see how well the model performed across the five splits that we created, we can look at the mean of the final error scores.</p>
+</blockquote>
+</li>
+<li><p>Practice time</p>
+<blockquote><p>Let's get started and fold some data!</p>
+</blockquote>
+</li>
+</ol>
+
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
@@ -14885,7 +14971,45 @@ Number of validation indices: 17
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<blockquote><p>there was a problem with this code!</p>
+</blockquote>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="3.-sklearn's-cross_val_score()">3. sklearn's cross_val_score()<a class="anchor-link" href="#3.-sklearn's-cross_val_score()">&#182;</a></h2>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ol>
+<li><p>sklearn's cross_val_score()</p>
+<blockquote><p>Hello again. Next, we are going to discuss cross-validation in scikit-learn.</p>
+</blockquote>
+</li>
+<li><p>cross_val_score()</p>
+<blockquote><p>We have seen that KFold() is a great way to create indices that we can use for cross-validation. If you just want to jump straight into cross-validation and don't want to mess with the indices, you can use scikit-learn's cross_val_score() method. This method requires four parameters. First, we have the estimator or the specific model that you want to use. In this example, we have a RandomForestClassifier() with the default model settings. Next, we use X to specify the complete training dataset and y to specify the response values. Lastly, the parameter cv allows us to specify the number of cross-validation splits (or folds). In this example, we have set the parameter cv to 5, allowing us to perform 5-fold cross-validation. By default, cross_val_score() will use a default scoring function for whichever model you have specified. For example, if you have a RandomForestClassifer as the estimator, the default scoring function is the mean overall accuracy. For most regression models, it will return the R-squared value.</p>
+</blockquote>
+</li>
+<li><p>Using scoring and make_scorer</p>
+<blockquote><p>If you want to use a different scoring function, you can create a scorer by using the make_scorer() method, and specifying the scoring metric that you want to use. Here we create a scorer for the mean_absolute_error() function by calling make_scorer() on scikit-learn's method for calculating the mean absolute error. Finally, we set the scoring parameter equal to the newly created mae_scorer inside the function.</p>
+</blockquote>
+</li>
+<li><p>Full example</p>
+<blockquote><p>Let's run through a full example of using scikit-learn's cross_val_score() for a regression model. The first step is to load all of the necessary methods. We load the model, cross_val_score(), and both the make_scorer() and mean_squared_error() methods. Next, we specify the regression model we want to use, with the specific parameters, as well as create the scorer that should be used when running the regression model. Finally, we call cross_val_score() on the estimator, rfr, the dataset X, the response values y, and set scoring equal to the scorer we generated. In this example, we set cv to 5 to complete 5-fold cross-validation.</p>
+</blockquote>
+</li>
+<li><p>Accessing the results</p>
+<blockquote><p>Let's look at the results. Notice how varied the mean squared errors are. The lowest was almost 86, while the highest was well over 200. If we have chosen an 80/20 split on the data at random, we may have reported an error as low as 86, or an error as high as 223. When we use cross-validation, we usually report the mean of the errors. In this case, it was 150. This is a much more realistic estimate for the out-of-sample accuracy that we can expect to see on new data. Eighty-six was probably way too low of an error, while 223 was way too high. Finally, we can look at the standard deviation to see how varied the five results were. The smaller the standard deviation, the tighter your 5 means were. This indicates that the actual accuracy for new data will probably match the mean of the cross-validation score fairly well.</p>
+</blockquote>
+</li>
+<li><p>Let's practice!</p>
+<blockquote><p>Let's now use cross_val_score() to perform cross-validation.</p>
+</blockquote>
+</li>
+</ol>
+
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
@@ -15045,6 +15169,33 @@ Number of validation indices: 17
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ol>
+<li><p>Leave-one-out-cross-validation (LOOCV)</p>
+<blockquote><p>Welcome back - in this lesson we take KFold cross-validation another step forward and discuss leave-one-out-cross-validation.</p>
+</blockquote>
+</li>
+<li><p>LOOCV</p>
+<blockquote><p>The name says it all. In leave-one-out-cross-validation, we are going to implement KFold cross-validation, where k is equal to n, the number of observations in the data. This means that every single point will be used in a validation set, completely by itself. For the first model, we will use all of the data for training, except for the first point, which will be used for validation. In model 2, we leave only the second data point out, in model three, the third data point, and so on. We create n models, for n-observations in the data. It might seem odd to use a single point as a complete validation set, but recall what you will do after leave-one-out-cross-validation is complete. You will present the average error of the n model runs.</p>
+</blockquote>
+</li>
+<li><p>When to use LOOCV?</p>
+<blockquote><p>You can use this technique when your data is limited, and you want to use as much training data as possible when fitting the model. This method is also used because it provides the best error estimate possible for a single new point. Consider that you just ran n-models, where each time you left out a single point. If you are given a single new point and need to estimate your error, leave-one-out-cross-validation is the right method to use. Unfortunately, this method is very computationally expensive. You should be careful using it if you have a lot of data, or if you are planning on testing a lot of different parameter sets. The best way to judge if this method is even possible is to run KFold cross-validation with a large K, maybe 25 or 50, and gauge how long it would take you to actually run Leave-one-out-cross-validation with the n-observations in your data.</p>
+</blockquote>
+</li>
+<li><p>LOOCV Example</p>
+<blockquote><p>Implementing leave-one-out-cross-validation can be done using cross_val_score(). You only need to set the parameter cv equal to the number of observations in your dataset. We can find the number of observations by looking at the shape of the X dataset. The result of running leave-one-out-cross-validation will be a list of errors that stand for the error of running a model and leaving a single point out. The list will have n values, where n is the number of observations. Finally, we print the mean and use this as our overall error metric.</p>
+</blockquote>
+</li>
+<li><p>Let's practice</p>
+<blockquote><p>Let's start practicing leave-one-out-cross-validation.</p>
+</blockquote>
+</li>
+</ol>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="4.1.-When-to-use-LOOCV">4.1. When to use LOOCV<a class="anchor-link" href="#4.1.-When-to-use-LOOCV">&#182;</a></h3>
 </div>
 </div>
@@ -15061,7 +15212,19 @@ Number of validation indices: 17
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<blockquote><p>1 &amp; 3</p>
+<p>Possible Answers:</p>
+<ul>
+<li>A &amp; B.</li>
+<li>B &amp; C.</li>
+<li>A &amp; C.</li>
+<li>A.</li>
+</ul>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<blockquote><p>1 &amp; 3.</p>
 </blockquote>
 
 </div>
